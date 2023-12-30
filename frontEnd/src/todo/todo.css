@@ -1,0 +1,65 @@
+/* Todo.css */
+
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    list-style: none;
+    padding: 0;
+
+
+    margin: auto 0px;
+    /* Center items vertically */
+}
+
+.nav-item {
+    text-align: left;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #333;
+    transition: background-color 0.3s ease;
+
+}
+
+.active-link {
+    background-color: #555;
+}
+
+.not-active {
+    background-color: #333;
+}
+
+/* Style for hover effect */
+.nav-link:hover {
+    background-color: #555;
+}
+
+.profile {
+    font-size: 25px;
+    color: black;
+    border: 1px solid white;
+    /* padding: 7px; */
+    border-radius: 50%;
+    width: 43px;
+    text-align: center;
+    background-color: #00ffd7;
+    display: inline-block;
+}
+
+.profileWrapper {
+    text-align: end;
+}
+
+.signOut {
+    text-decoration: none;
+    color: white;
+}
+
+.signOut:hover {
+    background-color: #555;
+
+}

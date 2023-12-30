@@ -1,0 +1,21 @@
+.custom-backdrop {
+
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Light gray background color */
+}
+
+.todo {
+    background-color: rgba(4, 128, 121, 0.4);
+    border: 3px solid #8b8ba3;
+    border-radius: 25px;
+}
+
+.verticalScrollbar {
+    max-height: 30rem;
+    overflow-y: auto;
+}
+
+.taskName {
+    margin: 0 0 0 86px;
+    font-size: 1.5rem;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "stackblitz-starters-k2gxpb",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/react": "^16.8 || ^17.0 || ^18.0",
+    "@types/react-dom": "^16.8 || ^17.0 || ^18.0",
+    "bootstrap": "^4.3.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": ">=0.59",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.0.0",
+    "redux": "^4 || ^5.0.0-beta.0",
+    "uuid": "^9.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
