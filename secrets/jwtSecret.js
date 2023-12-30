@@ -1,0 +1,2 @@
+const secret = '994c7dd2e3b5c22c5deb0b3ca86cdb613e24ddf87a92428543723d84bc7312cc025040ec3652f68503375868dcd5fa508a300d437b0bd6afadc837f849a6b386'
+module.exports = secret;
