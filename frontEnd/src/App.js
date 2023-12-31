@@ -12,6 +12,7 @@ import AdminLoginPage from './components/adminLogin.js';
 import AdminSignupPage from './components/adminSignup.js';
 import BookList from './normalUSer/normalLibrary.js';
 import NavBar from './normalUSer/normalLibrary.js';
+import AdminNavBar from './adminUser/adminLibrary.js';
 export default function App() {
   return (
     <Provider store={store}>
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/adminSignup" element={<AdminSignupPage></AdminSignupPage>} />
             <Route path="/forgotPassword" element={<ResetPassword></ResetPassword>} />
             <Route path="/normalLibrary/*" element={<NavBar></NavBar>} />
+            <Route path="/adminLibrary/*" element={<AdminNavBar></AdminNavBar>} />
             <Route path="/todo/*" element={<Todo></Todo>} />
 
 

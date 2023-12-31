@@ -25,9 +25,9 @@ const AdminLoginPage = () => {
             };
             try {
 
-                const { data: { token } } = await axios.post('http://localhost:3001/user/admin/Login', loginData)
-                dispatch({ type: 'setToken', payload: token })
-                navigate('/userLibrary');
+                const { data } = await axios.post('http://localhost:3001/user/admin/Login', loginData)
+                dispatch({ type: 'setToken', payload: data })
+                navigate('/adminLibrary');
 
             }
             catch (err) {

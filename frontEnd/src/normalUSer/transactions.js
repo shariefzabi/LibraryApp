@@ -14,31 +14,38 @@ function TransactionList() {
         };
         axios.get(' http://localhost:3001/user/getUsers', config).then(({ data }) => {
             console.log('usersDAta', data)
-            setUsers(() => data)
+            setUsers(data)
 
         })
     }, [])
-    const { transactions } = users
-    if (transactions) {
-        return (
-            <div >
-                {
-                    (transactions.map((ele, index) => {
-                        const id = `${uuidv4()}-index-${index}`
-                        const date = ele.on.split('T')[0]
-                        return (
-                            <div className="todo mb-2 mt-1" key={id}>
-                                <p className='taskName'>{ele.name}</p>
-                                <p className='transaction-date'>{`IssuedOn: ${date}`}</p>
-                            </div>
-                        )
-                    }))
-                }
 
-            </div >
+    if (users) {
+        const { transactions } = users
+        if (transactions) {
+            return (
+                <div >
+                    <h1>TransactionList</h1>
+                    {
 
-        )
+                        (transactions.map((ele, index) => {
+                            const id = `${uuidv4()}-index-${index}`
+                            const date = ele.on.split('T')[0]
+                            return (
+                                <div className="todo mb-2 mt-1" key={id}>
+                                    <p className='taskName'>{ele.name}</p>
+                                    <p className='transaction-date'>{`IssuedOn: ${date}`}</p>
+                                </div>
+                            )
+                        }))
+                    }
+
+                </div >
+
+            )
+        }
     }
-    return (<h1>No Transactions As of now</h1>)
+    else {
+        return (<h1>No Transactions As of now</h1>)
+    }
 }
 export default TransactionList;

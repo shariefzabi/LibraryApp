@@ -14,8 +14,9 @@ bookRouter.post('/', authenticateAdmin, async (req, res) => {
         if (name && author) {
             const db = getDB();
             const bookCollection = db.collection('books');
-            const acknowledgement = await bookCollection.insertOne({ name, author, currentAvailabilityStatus: 'Available', AssignedTo: '' });;
-            return res.status(201).send(acknowledgement);
+            await bookCollection.insertOne({ name, author, currentAvailabilityStatus: 'Available', AssignedTo: '' });
+            const books = await bookCollection.find({ currentAvailabilityStatus: 'Available' }).toArray()
+            return res.status(201).send(books);
         }
         else {
             res.status(400).json({ message: 'bad request' });
@@ -31,6 +32,20 @@ bookRouter.get('/getBooks', authenticateNormalUSer, async (req, res) => {
 
         const db = getDB();
         const filter = { AssignedTo: req.user }
+
+        const bookCollection = db.collection('books');
+        const books = await bookCollection.find(filter).toArray();
+        res.status(200).json(books);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+bookRouter.post('/getBooksForAdmin', authenticateAdmin, async (req, res) => {
+    try {
+
+        const db = getDB();
+        const filter = req.body
         const bookCollection = db.collection('books');
         const books = await bookCollection.find(filter).toArray();
         res.status(200).json(books);
@@ -40,7 +55,6 @@ bookRouter.get('/getBooks', authenticateNormalUSer, async (req, res) => {
 });
 
 
-
 // Update a book by ID
 bookRouter.patch('/issueBooks', authenticateAdmin, async (req, res) => {
 
@@ -48,12 +62,13 @@ bookRouter.patch('/issueBooks', authenticateAdmin, async (req, res) => {
         const db = getDB();
         const bookCollection = db.collection('books');
         const normalUsers = db.collection('normalusers');
-        const { BookId, username } = req.body
+        const { BookId, username, date } = req.body
+        const filter = { currentAvailabilityStatus: 'Available' }
         const id = BSON.ObjectId.createFromHexString(BookId)
-        const bookAck = await bookCollection.findOneAndUpdate({ _id: id }, { $set: { currentAvailabilityStatus: 'NotAvailable', AssignedTo: username } }, { returnOriginal: false });
-        console.log(bookAck)
-        const userAck = await normalUsers.updateOne({ username }, { $push: { assignedBooks: BookId, transactions: { name: bookAck.name, on: new Date(), status: 'Issued' } } })
-        res.status(200).json({ message: 'issuedSucessfully', BookStatus: bookAck.currentAvailabilityStatus, noOfUsersUpdated: userAck.modifiedCount })
+        const bookAck = await bookCollection.findOneAndUpdate({ _id: id }, { $set: { currentAvailabilityStatus: 'NotAvailable', AssignedTo: username, returnDate: date } }, { returnOriginal: false });
+        await normalUsers.updateOne({ username }, { $push: { assignedBooks: BookId, transactions: { name: bookAck.name, on: new Date(), status: 'Issued' } } })
+        const books = await bookCollection.find(filter).toArray();
+        res.status(200).json(books)
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -67,10 +82,12 @@ bookRouter.patch('/ReturnBooks', authenticateAdmin, async (req, res) => {
         const bookCollection = db.collection('books');
         const normalUsers = db.collection('normalusers');
         const { BookId, username } = req.body
+        const filter = { currentAvailabilityStatus: 'NotAvailable' }
         const id = BSON.ObjectId.createFromHexString(BookId)
         const bookAck = await bookCollection.findOneAndUpdate({ _id: id }, { $set: { currentAvailabilityStatus: 'Available', AssignedTo: "" } }, { returnOriginal: false });
         const userAck = await normalUsers.updateOne({ username }, { $pull: { assignedBooks: BookId }, $push: { transactions: { name: bookAck.name, on: new Date(), status: 'Returned' } } })
-        res.status(200).json({ message: 'returnedSucessfully', BookStatus: bookAck.currentAvailabilityStatus, noOfUsersUpdated: userAck.modifiedCount })
+        const books = await bookCollection.find(filter).toArray();
+        res.status(200).json(books)
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -83,7 +100,9 @@ bookRouter.delete('/:id', authenticateAdmin, async (req, res) => {
         const bookCollection = db.collection('books');
         const id = BSON.ObjectId.createFromHexString(hexString)
         await bookCollection.deleteOne({ _id: id })
-        res.json({ message: 'Books deleted' });
+        const books = await bookCollection.find({ currentAvailabilityStatus: 'Available' }).toArray();
+        res.status(200).json(books);
+
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

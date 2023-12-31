@@ -121,6 +121,17 @@ router.get('/getUsers', authenticateNormalUSer, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+router.get('/getAllUsers', authenticateNormalUSer, async (req, res) => {
+    try {
+        const db = getDB();
+
+        const normalUsers = db.collection('normalusers')
+        const users = await normalUsers.find().toArray()
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 
 module.exports = router;
