@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+
 import './transactions.css'
 function TransactionList() {
     const [users, setUsers] = useState([])
@@ -43,9 +44,10 @@ function TransactionList() {
 
             )
         }
+        else {
+            return (<h1>No Transactions As of now</h1>)
+        }
     }
-    else {
-        return (<h1>No Transactions As of now</h1>)
-    }
+
 }
 export default TransactionList;

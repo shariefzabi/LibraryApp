@@ -21,51 +21,53 @@ function IssueBooks() {
     }, []);
 
     const token = useSelector((state) => state?.JWTReducer?.token)
-    if (token) {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}` // Include the token in the 'Authorization' header
-            }
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}` // Include the token in the 'Authorization' header
         }
-        useEffect(() => {
+    }
+    useEffect(() => {
 
-            axios.post(' http://localhost:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'Available' }, config).then(({ data }) => {
-                setBooks(data)
-                console.log(data)
-            })
-            axios.get(' http://localhost:3001/user/getAllUsers', config).then(({ data }) => {
-                setUsers(data)
-                console.log(data)
-            })
-
-
-
-
-        }, [])
-        const createBook = useCallback(async (BookData) => {
-            const { data } = await axios.post(' http://localhost:3001/books', BookData, config)
+        axios.post(' http://localhost:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'Available' }, config).then(({ data }) => {
             setBooks(data)
+            console.log(data)
         })
-
-
-        const deleteBook = useCallback(async (id) => {
-            const { data } = await axios.delete(`http://localhost:3001/books/${id}`, config)
-            setBooks(data)
-        })
-        const issueBook = useCallback(async (username, date) => {
-            const { data } = await axios.patch(`http://localhost:3001/books/issueBooks`, { BookId: selectedBookId, username, date }, config)
-            setBooks(data)
+        axios.get(' http://localhost:3001/user/getAllUsers', config).then(({ data }) => {
+            setUsers(data)
+            console.log(data)
         })
 
 
 
 
-        return (
-            <div>
-                <h2>List of Books</h2>
-                <div className='mb-3' style={{ textAlign: 'end' }}>
-                    <button onClick={() => handleModalOpen('create')} className='btn btn-primary mr-2'>Create Book</button>
-                </div>
+    }, [])
+    const createBook = useCallback(async (BookData) => {
+        const { data } = await axios.post(' http://localhost:3001/books', BookData, config)
+        setBooks(data)
+    })
+
+
+    const deleteBook = useCallback(async (id) => {
+        const { data } = await axios.delete(`http://localhost:3001/books/${id}`, config)
+        setBooks(data)
+    })
+    const issueBook = useCallback(async (username, date) => {
+        const { data } = await axios.patch(`http://localhost:3001/books/issueBooks`, { BookId: selectedBookId, username, date }, config)
+        setBooks(data)
+    })
+
+
+
+
+    return (
+        <div>
+            <h2>List of Books</h2>
+            <div className='mb-3' style={{ textAlign: 'end' }}>
+                <button onClick={() => handleModalOpen('create')} className='btn btn-primary mr-2'>Create Book</button>
+            </div>
+            {books.length ?
+
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                     {books.map((book, index) => (
                         <div key={index} className="col mb-2">
@@ -86,17 +88,16 @@ function IssueBooks() {
                             </div>
                         </div>
                     ))}
-                </div>
-                <CreatingModal createBook={createBook}></CreatingModal>
-                <AssignModal issueBook={issueBook} users={users} />
-            </div>
-        );
-    }
-    else {
-        return (<p className="col-3">
-            <Link to="/adminLogin">login as Admin User{' '}</Link>
-        </p>)
-    }
+                </div> : <p>No Books As of now</p>
+            }
+            <CreatingModal createBook={createBook}></CreatingModal>
+            <AssignModal issueBook={issueBook} users={users} />
+
+        </div>
+    );
+
+
+
 }
 
 
