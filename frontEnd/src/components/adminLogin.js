@@ -75,7 +75,7 @@ const AdminLoginPage = () => {
                 <div className='row'>
                     <button type="button" className="ml-3 btn btn-primary" onClick={handleLogin}>Login</button>
                     <p style={{ textAlign: 'end' }} className="col-3">
-                        <Link to="/">login as Normal User{' '}</Link>
+                        <Link to="/">login as User{' '}</Link>
                     </p>
                 </div>
                 <div className='row'>

@@ -62,10 +62,10 @@ const LoginPage = () => {
           </p>
         </div>
         <div className='row'>
-          <p className="col-2">
+          <p className="col-3">
             New user?{' '}
             <Link to="/signup" className="btn btn-link">
-              Sign Up
+              Sign Up as user
             </Link>
           </p>
         </div>

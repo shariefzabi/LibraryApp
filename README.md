@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This project contains both front end and backend
 
-frontEnd:
+`FrontEnd`:
 
 # `npm i`
 Run npm i command  to install Node modules
@@ -18,50 +18,58 @@ In the project directory, you can run:
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-`steps to start the application Locally(FrontEnd)`:
-run [npm i] in your terminal to install node_modules
-run [npm start]  in your terminal to start the Application
+`steps to Run the project(Locally)`
+=>navigate to frontEnd folder 
+=>run [npm i] in your terminal to install node_modules
+=>run [npm start]  in your terminal to start the Application
 
 
 Note : please do not include `[` and `]` while running the commands
 
 after succesfully completing the above steps the application should start on port  3000 on your localhost
 
-`steps to start the application Locally(backend)`:
-run [npm i] in your terminal to install node_modules
-run [npm start]  in your terminal to start the Application
+
+
+`backend`:
+
+# `npm i`
+Run npm i command  to install Node modules
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+`steps to Run the project(Locally)`
+=>navigate to backend folder 
+=>run [npm i] in your terminal to install node_modules
+=>run [npm start]  in your terminal to start the Application
 
 
 Note : please do not include `[` and `]` while running the commands
 
-after succesfully completing the above steps the application should start on port  3000 on your localhost
+after succesfully completing the above steps the application should start on port  3001 on your localhost
+
+
+
+
+
 
 `steps to use the App`
-we can use this as two types of users
-By default we will see a normal Login page , In the page the we can see Links to "Login as Admin" and "sign up as user"  by clicking on links corresponding Pages will be rendered
+You can use this as two types of users
+By default user will see a normal Login page , In the page the user can Links to "Login as Admin" and sign up as Normal by clicking on links corresponding links will be rendered
 
-1)sign up as user
-  we can register as a  new user with a  valid username ,name, email,contact Number
-   after sign up , we  will be redirected to "login as a user" page where we can login 
-
-2)login  as user
-  we can login  with our   valid username 
-  after loggin in we can see two tabs 
-    1) Books: here we can see the books assigne to the user
-    2)Transactions: here we can see the transactions performed on the user
-
-
-3)sign up as admin
-  we can register as a  new Admin with a  valid username ,password ,name, email,contact Number
-  after sign up as a admin , we will be redirected to login as a admin page where we can login as admin
-
-4)login as admin
-    1)  we can Login with our created username and password
-    3)Alternately we can change password and can login in as a normal user
-    4) after successfull login the we can see two tabs Issuse Book and Return Book
+1)sign up (normal)
+  user can register as a  new user with a  valid username ,password ,name, email,contact Number
+1)Admin(login)
+    1)user can register as a  new user with a  valid username ,password ,name, email,contact Number
+    2) after user can Login with your created username and password
+    3)Alternately user can change password and can login in as a normal user
+    4) after successfull login the user can see two tabs Issuse Book and Return Book
         1)Issue Book
-          here admin can create a book, assign a book to a existing  user with a return date,  and can delete a book
-               Note : to assign a book to normal user atleast one user should be created   
+          here user can create a book, assign a book to a existing normal user with a return date  and can delete a book
+               Note : to assign a book to normal user atleast one normal user should be created   
         2) Return Book:
              1) here user can see the return dates of books and return them , so they can be assigned to new users
     
@@ -75,9 +83,6 @@ By default we will see a normal Login page , In the page the we can see Links to
 
 
 `Deployment plan`
-Great! Deploying a MERN (MongoDB, Express.js, React, Node.js) stack application involves specific considerations for each part of the stack. Here's an adjusted deployment plan specifically tailored for a MERN stack application:
-
-Deployment Plan for MERN Stack Application on AWS
 Cloud Service Provider Selection:
 
 Provider: Choose AWS due to its comprehensive service offerings and compatibility with the MERN stack components.
