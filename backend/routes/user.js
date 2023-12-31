@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const secret = require('../secrets/jwtSecret')
+const authenticateNormalUSer = require('../middleware/authenticateNormalUSer')
 const { getDB } = require('../mongodb'); // Replace with your user model
 
 
@@ -18,7 +19,7 @@ router.post('/admin/signup', async (req, res) => {
         // Check if the username already exists
         const existingAdmin = await adminUsers.findOne({ username });
         if (existingAdmin) {
-            return res.status(400).json({ message: 'Username already exists.' });
+            return res.status(200).send('Username already exists.');
         }
 
         // Hash the password before saving it to the database
@@ -43,7 +44,7 @@ router.post('/normal/signup', async (req, res) => {
         // Check if the username already exists
         const existingNormalUser = await normalUsers.findOne({ username });
         if (existingNormalUser) {
-            return res.status(400).json({ message: 'Username already exists.' });
+            return res.status(200).send('Username already exists.');
         }
 
         // Create a new normal user
@@ -63,13 +64,13 @@ router.post('/admin/login', async (req, res) => {
     if (username && password) {
         const user = await adminUsers.findOne({ username });
 
-        if (!user) return res.status(400).json({ message: 'Invalid username or password.' });
+        if (!user) return res.status(400).send({ message: 'Invalid username or password.' });
 
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) return res.status(400).json({ message: 'Invalid username or password.' });
 
-        const token = jwt.sign({ isAdmin: true }, secret); // Replace secret with your secret key
-        res.header('Authorization', token).json({ token });
+        const token = jwt.sign({ isAdmin: true, username: username }, secret); // Replace secret with your secret key
+        res.header('Authorization', token).json({ token, username });
     }
     else {
         res.status(400).json({ message: 'username or password is not provided' });
@@ -85,8 +86,8 @@ router.post('/normal/Login', async (req, res) => {
     if (!user) return res.status(400).json({
         message: 'Invalid username'
     });
-    const token = jwt.sign({ isAdmin: false }, secret); // Replace secret with your secret key
-    res.header('Authorization', token).json({ token });
+    const token = jwt.sign({ isAdmin: false, username }, secret); // Replace secret with your secret key
+    res.header('Authorization', token).json({ token, username });
 });
 
 
@@ -109,7 +110,17 @@ router.patch('/admin/changePassword', async (req, res) => {
     });
 
 });
-
+router.get('/getUsers', authenticateNormalUSer, async (req, res) => {
+    try {
+        const db = getDB();
+        const filter = { username: req.user }
+        const normalUsers = db.collection('normalusers')
+        const user = await normalUsers.findOne(filter)
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 
 module.exports = router;

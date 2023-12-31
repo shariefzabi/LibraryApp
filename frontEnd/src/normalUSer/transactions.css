@@ -1,0 +1,16 @@
+.todo {
+    background-color: rgba(4, 128, 121, 0.4);
+    border: 3px solid #8b8ba3;
+    border-radius: 25px;
+}
+
+.taskName {
+    margin: 0 0 0 86px;
+    font-size: 1.5rem;
+}
+
+.transaction-date {
+    text-align: end;
+    margin: 0 0 0 86px;
+    font-size: 1.5rem;
+}

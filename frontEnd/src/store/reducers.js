@@ -1,5 +1,7 @@
 const userData = {}
 const todos = {}
+const user = { token: '', username: '' }
+
 export function userReduce(state = userData, action) {
   const payload = action?.payload
   switch (action.type) {
@@ -49,5 +51,17 @@ export function toDoReducer(state = todos, action) {
   }
 }
 
+export function JWTReducer(state = user, action) {
+
+  const payload = action?.payload
+  switch (action.type) {
+    case 'setToken':
+      console.log(payload)
+      return payload
+
+    default:
+      return state;
+  }
+}
 
 

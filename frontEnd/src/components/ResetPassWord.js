@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const ResetPassword = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const userData = useSelector((state) => state?.userReduce?.users);
-    const [email, setEmail] = useState('');
+
+    const [username, setusername] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({ newPassword: '', confirmPassword: '' });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email || !newPassword || !confirmPassword) {
+        if (!username || !newPassword || !confirmPassword) {
             alert('Please fill in all fields');
             return;
         }
@@ -24,33 +25,43 @@ const ResetPassword = () => {
         }
 
         else {
-            if (userData && Object.keys(userData).includes(email)) {
-                const newPasswordValid = validatePassword(newPassword)
-                const confirmPasswordValid = validatePassword(confirmPassword)
-                if (!newPasswordValid) {
-                    setErrors((prevErrors) => ({
-                        ...prevErrors,
-                        newPassword: 'Password must be at least 6 characters long, include 1 uppercase letter, and 1 special character (!@#$%^&*).',
-                    }));
-                    return
-                }
-                if (!confirmPasswordValid) {
-                    setErrors((prevErrors) => ({
-                        ...prevErrors,
-                        confirmPassword: 'Password must be at least 6 characters long, include 1 uppercase letter, and 1 special character (!@#$%^&*).',
-                    }));
-                    return
-                }
-                if (newPasswordValid && confirmPassword) {
-                    dispatch({ type: 'changePassword', payload: { email, newPassword } })
-                    navigate('/')
-                    alert('password changed Successfully')
 
+            const newPasswordValid = validatePassword(newPassword)
+            const confirmPasswordValid = validatePassword(confirmPassword)
+            if (!newPasswordValid) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    newPassword: 'Password must be at least 6 characters long, include 1 uppercase letter, and 1 special character (!@#$%^&*).',
+                }));
+                return
+            }
+            if (!confirmPasswordValid) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    confirmPassword: 'Password must be at least 6 characters long, include 1 uppercase letter, and 1 special character (!@#$%^&*).',
+                }));
+                return
+            }
+            if (newPasswordValid && confirmPassword) {
+                const loginData = {
+                    username,
+                    password: newPassword
+                };
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    newPassword: '', confirmPassword: ''
+                }))
+                const response = await axios.patch('http://localhost:3001/user/admin/changePassword', loginData)
+                if (response.status === 200) {
+                    navigate('/adminLogin')
+                    alert('password changed Successfully')
                 }
 
             }
+
+
             else {
-                alert('email does not exists')
+                alert('username does not exists')
                 return;
             }
 
@@ -68,14 +79,14 @@ const ResetPassword = () => {
             <h1>Reset Password</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="username">username:</label>
                     <input
                         className="form-control col-md-4"
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="username"
+                        id="username"
+                        name="username"
+                        value={username}
+                        onChange={(e) => setusername(e.target.value)}
                         required
                     />
                 </div>

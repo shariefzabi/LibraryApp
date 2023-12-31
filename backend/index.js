@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express()
+const cors = require('cors');
 app.use(express.json())
+app.use(cors())
 const { connectDB } = require('./mongodb')
-const PORT = 3000
+const PORT = 3001
 connectDB()
 const bookRouter = require('./routes/books')
 const userRouter = require('./routes/user')

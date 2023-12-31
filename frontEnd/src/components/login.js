@@ -1,60 +1,72 @@
 // LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import axios from 'axios'
 
 
 const LoginPage = () => {
 
-  const userData = useSelector((state) => state?.userReduce?.users);
+
   const dispatch = useDispatch()
-  const [email, setemail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setuserName] = useState('');
+
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (userData && Object.keys(userData).includes(email) && userData[email] === password) {
-      dispatch({ type: 'setUser', payload: email })
-      navigate('/todo');
-    } else {
-      alert('Invalid email or password');
+  const handleLogin = async () => {
+
+    if (userName) {
+
+      const loginData = {
+        username: userName
+      };
+      try {
+
+        const { data } = await axios.post('http://localhost:3001/user/normal/Login', loginData)
+        dispatch({ type: 'setToken', payload: data })
+
+        navigate('/normalLibrary');
+
+      }
+      catch (err) {
+        alert(`${err.message}`);
+      }
     }
+    else {
+      alert(`Invaid username and password`);
+    }
+
+
+
   };
 
   return (
     <div className="container mt-5">
-      <h2>Login</h2>
+      <h2> Normal Login</h2>
       <form>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">email</label>
+          <label htmlFor="userName" className="form-label">userName</label>
           <input
             type="text"
             className="form-control col-md-4"
-            id="email"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
+            id="userName"
+            value={userName}
+            onChange={(e) => setuserName(e.target.value)}
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control col-md-4"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+
+        <div className='row'>
+          <button type="button" className="ml-3 btn btn-primary" onClick={handleLogin}>Login</button>
+          <p style={{ textAlign: 'end' }} className="col-3">
+            <Link to="/adminLogin">login as Admin{' '}</Link>
+          </p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
         <div className='row'>
           <p className="col-2">
             New user?{' '}
             <Link to="/signup" className="btn btn-link">
               Sign Up
             </Link>
-          </p>
-          <p style={{ textAlign: 'end' }} className="col-2 mt-2">
-            <Link to="/forgotPassword"> forgot password?{' '}</Link>
           </p>
         </div>
       </form>
