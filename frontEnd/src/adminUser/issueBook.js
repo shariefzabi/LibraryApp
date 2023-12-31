@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AssignModal from '../Modals/AssignModal';
 import CreatingModal from '../Modals/createBookModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesome icon
+import { faTrash } from '@fortawesome/free-solid-svg-icons'; // Import trash icon
 
 function IssueBooks() {
     const [books, setBooks] = useState([])
@@ -70,7 +72,7 @@ function IssueBooks() {
                             <div className="card h-100">
                                 <div className="card-body">
                                     <div className='mb-1' style={{ textAlign: 'end' }}>
-                                        <button className='btn btn-danger' onClick={() => deleteBook(book._id)}>Delete Book</button>
+                                        <button className='btn btn-danger' onClick={() => deleteBook(book._id)}> <FontAwesomeIcon icon={faTrash} size="1x" /></button>
                                     </div>
                                     <h5 className="card-title">{book.name}</h5>
                                     <p className="card-text">Author: {book.author}</p>

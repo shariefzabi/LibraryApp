@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+
 export default function CreatingModal({ createBook }) {
 
-    // Validation logic for each field
-    const [disableButton, setDisableButton] = useState(true)
+
+
+
+
 
     const handleModalClose = useCallback(() => {
         const modal = document.getElementById(`Modal-create`);
