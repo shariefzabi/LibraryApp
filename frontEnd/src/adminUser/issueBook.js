@@ -29,11 +29,11 @@ function IssueBooks() {
     }
     useEffect(() => {
 
-        axios.post(' http://localhost:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'Available' }, config).then(({ data }) => {
+        axios.post(' http://13.51.233.171:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'Available' }, config).then(({ data }) => {
             setBooks(data)
             console.log(data)
         })
-        axios.get(' http://localhost:3001/user/getAllUsers', config).then(({ data }) => {
+        axios.get(' http://13.51.233.171:3001/user/getAllUsers', config).then(({ data }) => {
             setUsers(data)
             console.log(data)
         })
@@ -43,17 +43,17 @@ function IssueBooks() {
 
     }, [])
     const createBook = useCallback(async (BookData) => {
-        const { data } = await axios.post(' http://localhost:3001/books', BookData, config)
+        const { data } = await axios.post(' http://13.51.233.171:3001/books', BookData, config)
         setBooks(data)
     })
 
 
     const deleteBook = useCallback(async (id) => {
-        const { data } = await axios.delete(`http://localhost:3001/books/${id}`, config)
+        const { data } = await axios.delete(`http://13.51.233.171:3001/books/${id}`, config)
         setBooks(data)
     })
     const issueBook = useCallback(async (username, date) => {
-        const { data } = await axios.patch(`http://localhost:3001/books/issueBooks`, { BookId: selectedBookId, username, date }, config)
+        const { data } = await axios.patch(`http://13.51.233.171:3001/books/issueBooks`, { BookId: selectedBookId, username, date }, config)
         setBooks(data)
     })
 

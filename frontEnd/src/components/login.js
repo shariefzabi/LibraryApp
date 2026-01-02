@@ -22,7 +22,7 @@ const LoginPage = () => {
       };
       try {
 
-        const { data } = await axios.post('http://localhost:3001/user/normal/Login', loginData)
+        const { data } = await axios.post('http://13.51.233.171:3001/user/normal/Login', loginData)
         dispatch({ type: 'setToken', payload: data })
 
         navigate('/normalLibrary');

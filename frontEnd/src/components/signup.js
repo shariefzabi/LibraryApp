@@ -53,7 +53,7 @@ const SignupPage = () => {
       }));
 
 
-      const { data: message } = await axios.post('http://localhost:3001/user/normal/signup', signUpData)
+      const { data: message } = await axios.post('http://13.51.233.171:3001/user/normal/signup', signUpData)
       console.log(message)
       if (message === 'Username already exists.') {
         setIsExistingUser(true)

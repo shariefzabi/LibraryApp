@@ -25,7 +25,7 @@ const AdminLoginPage = () => {
             };
             try {
 
-                const { data } = await axios.post('http://localhost:3001/user/admin/Login', loginData)
+                const { data } = await axios.post('http://13.51.233.171:3001/user/admin/Login', loginData)
                 dispatch({ type: 'setToken', payload: data })
                 navigate('/adminLibrary');
 
@@ -50,7 +50,7 @@ const AdminLoginPage = () => {
 
     return (
         <div className="container mt-5">
-            <h2> Admin Login</h2>
+            <h2> Admin Login Library APP</h2>
             <form>
                 <div className="mb-3">
                     <label htmlFor="userName" className="form-label">userName</label>

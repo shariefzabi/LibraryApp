@@ -16,7 +16,7 @@ function BookList() {
                     Authorization: `Bearer ${token}` // Include the token in the 'Authorization' header
                 }
             };
-            axios.get(' http://localhost:3001/books/getBooks', config).then(({ data }) => {
+            axios.get(' http://13.51.233.171:3001/books/getBooks', config).then(({ data }) => {
                 console.log(data)
                 setBooks(data)
                 console.log(books)

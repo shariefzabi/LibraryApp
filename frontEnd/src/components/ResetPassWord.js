@@ -51,7 +51,7 @@ const ResetPassword = () => {
                     ...prevErrors,
                     newPassword: '', confirmPassword: ''
                 }))
-                const response = await axios.patch('http://localhost:3001/user/admin/changePassword', loginData)
+                const response = await axios.patch('http://13.51.233.171:3001/user/admin/changePassword', loginData)
                 if (response.status === 200) {
                     navigate('/adminLogin')
                     alert('password changed Successfully')

@@ -16,7 +16,7 @@ export default function ReturnBook() {
     }
     useEffect(() => {
 
-        axios.post(' http://localhost:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'NotAvailable' }, config).then(({ data }) => {
+        axios.post(' http://13.51.233.171:3001/books/getBooksForAdmin', { currentAvailabilityStatus: 'NotAvailable' }, config).then(({ data }) => {
             setBooks(data)
             console.log(data)
         })
@@ -24,7 +24,7 @@ export default function ReturnBook() {
     }, [])
 
     const returnBook = useCallback(async (username, id) => {
-        const { data } = await axios.patch(`http://localhost:3001/books/ReturnBooks`, { BookId: id, username }, config)
+        const { data } = await axios.patch(`http://13.51.233.171:3001/books/ReturnBooks`, { BookId: id, username }, config)
         setBooks(data)
     })
 
