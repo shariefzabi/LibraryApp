@@ -8,7 +8,10 @@ const PORT = 3001
 connectDB()
 const bookRouter = require('./routes/books')
 const userRouter = require('./routes/user')
+const requestLogger = require('./logger')
 
+
+app.use(requestLogger)
 app.use('/books', bookRouter)
 app.use('/user', userRouter)
 
